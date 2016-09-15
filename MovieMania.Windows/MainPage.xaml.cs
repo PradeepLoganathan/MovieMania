@@ -27,12 +27,6 @@ namespace MovieMania.Windows
         {
             this.InitializeComponent();
         }
-
-        private async void button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            Discover d = new Discover();
-            Discover disc = await d.GoDiscover();
-        }
-
+        
     }
 }

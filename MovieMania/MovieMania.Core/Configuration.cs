@@ -17,7 +17,7 @@ namespace MovieMania.Core
         public async void GetConfiguration()
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync("http://api.themoviedb.org/3/configuration?))
+            using (HttpResponseMessage response = await client.GetAsync("http://api.themoviedb.org/3/configuration?"))
             using (HttpContent content = response.Content)
             {
                 string result = await content.ReadAsStringAsync();
