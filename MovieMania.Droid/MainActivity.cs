@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MovieMania.Droid
 {
-    [Activity(Label = "MovieMania.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "MovieMania.Droid",Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         int count = 1;
