@@ -36,16 +36,31 @@ namespace MovieMania.Core
         public float vote_average { get; set; }
         public int vote_count { get; set; }
 
-        public async Task<Movie> GetMovie()
+        public async Task<Movie> GetMovie(int MovieID)
         {
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync("http://api.themoviedb.org/3/movie/550?"))
-            using (HttpContent content = response.Content)
+            try
             {
-                string result = await content.ReadAsStringAsync();
-                Movie Movielist = JsonConvert.DeserializeObject<Movie>(result);
-                return Movielist;
+                using (HttpClient client = new HttpClient())
+                {
+                    string url = LoadConfig.ConfigValues["BaseURL"] + "/movie/" + MovieID.ToString() + "?api_key=" + LoadConfig.ConfigValues["APPID"];
+                    using (HttpResponseMessage response = await client.GetAsync(url))
+                    using (HttpContent content = response.Content)
+                    {
+                        string result = await content.ReadAsStringAsync();
+                        Movie Movielist = JsonConvert.DeserializeObject<Movie>(result);
+                        return Movielist;
+                    }
+                }
             }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public override string ToString()
+        {
+            return original_title + " " + title + " " + status;
         }
     }
 
