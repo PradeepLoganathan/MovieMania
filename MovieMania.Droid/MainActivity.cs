@@ -33,7 +33,7 @@ namespace MovieMania.Droid
             toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
 
             SetSupportActionBar(toolbar);
-            SupportActionBar.Title = "Hello from Toolbar";
+            SupportActionBar.Title = "Movie Mania";
 
             
 

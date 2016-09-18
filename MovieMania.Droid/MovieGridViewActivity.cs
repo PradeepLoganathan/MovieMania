@@ -108,23 +108,23 @@ namespace MovieMania.Droid
 
         private async Task<Bitmap> GetBitMapfromUrl(string URL)
         {
-            try
-            {
-                using (WebClient webclient = new WebClient())
-                {
-                    byte[] bytes = await webclient.DownloadDataTaskAsync(URL);
-                    if (bytes != null && bytes.Length > 0)
-                        return BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
-                }
-            }
-            catch (TaskCanceledException Te)
-            {
+            //try
+            //{
+            //    using (WebClient webclient = new WebClient())
+            //    {
+            //        byte[] bytes = await webclient.DownloadDataTaskAsync(URL);
+            //        if (bytes != null && bytes.Length > 0)
+            //            return BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
+            //    }
+            //}
+            //catch (TaskCanceledException Te)
+            //{
 
-            }
-            catch (System.Exception e)
-            {
+            //}
+            //catch (System.Exception e)
+            //{
 
-            }
+            //}
 
 
             return null;
