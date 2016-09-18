@@ -7,11 +7,13 @@ using Android.Widget;
 using Android.OS;
 using MovieMania.Core;
 using System.Threading.Tasks;
+using Android.Support.V7.App;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace MovieMania.Droid
 {
     [Activity(Label = "MovieMania.Droid",Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    public class MainActivity : AppCompatActivity
     {
         int count = 1;
         int movieid = 550;
@@ -20,15 +22,22 @@ namespace MovieMania.Droid
         {
             base.OnCreate(bundle);
 
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.Main);
 
-            // Get our button from the layout resource,
-            // and attach an event to it
+            
             Button button = FindViewById<Button>(Resource.Id.MyButton);
             TextView Tv = FindViewById<TextView>(Resource.Id.textView1);
+            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+
+            SetSupportActionBar(toolbar);
+            SupportActionBar.Title = "Hello from Appcompat Toolbar";
+
+            
+
 
             LoadConfig.Load();
+
             button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
             button.Click += delegate { this.GM(Tv); movieid++; };
 
