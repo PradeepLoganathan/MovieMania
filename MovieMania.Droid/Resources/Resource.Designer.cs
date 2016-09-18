@@ -1609,6 +1609,12 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f0b0059
 			public const int media_actions = 2131427417;
 			
+			// aapt resource value: 0x7f0b0063
+			public const int menu_settings = 2131427427;
+			
+			// aapt resource value: 0x7f0b0062
+			public const int menu_share = 2131427426;
+			
 			// aapt resource value: 0x7f0b001b
 			public const int middle = 2131427355;
 			
@@ -1929,6 +1935,22 @@ namespace MovieMania.Droid
 			}
 			
 			private Layout()
+			{
+			}
+		}
+		
+		public partial class Menu
+		{
+			
+			// aapt resource value: 0x7f0c0000
+			public const int home = 2131492864;
+			
+			static Menu()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Menu()
 			{
 			}
 		}
