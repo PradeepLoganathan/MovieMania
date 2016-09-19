@@ -1,6 +1,8 @@
 # PradeepLoganathan / MovieMania
 
-[![Build status](https://ci.appveyor.com/api/projects/status/dhtss7nkrph5efl2?svg=true)](https://ci.appveyor.com/project/PradeepLoganathan/moviemania)
+[![Build status](https://ci.appveyor.com/api/projects/status/dhtss7nkrph5efl2?svg=true&retina=true)](https://ci.appveyor.com/project/PradeepLoganathan/moviemania)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/dhtss7nkrph5efl2?svg=true&retina=true&passingText=master%20-%20OK)](https://ci.appveyor.com/project/PradeepLoganathan/moviemania)
 
 
 
