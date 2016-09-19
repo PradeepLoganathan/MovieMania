@@ -1,7 +1,6 @@
 # PradeepLoganathan / MovieMania
 
-
-[![Build Status](https://travis-ci.org/PradeepLoganathan/MovieMania.svg?branch=master)](https://travis-ci.org/PradeepLoganathan/MovieMania)
+[![Build status](https://ci.appveyor.com/api/projects/status/dhtss7nkrph5efl2?svg=true)](https://ci.appveyor.com/project/PradeepLoganathan/moviemania)
 
 
 
