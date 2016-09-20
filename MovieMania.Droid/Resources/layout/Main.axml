@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
   
-  <include
+    <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
   
@@ -14,34 +14,34 @@
         android:layout_height="fill_parent"
         android:id="@+id/main_content"
         android:layout_below="@id/toolbar">
-
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-          android:id="@+id/moviesearch"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:hint="Movie Name"
-         
-          />
-      </android.support.design.widget.TextInputLayout>
-        
-       
+      
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/moviesearch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Movie Name" />
+        </android.support.design.widget.TextInputLayout>
+      
         <Button
             android:id="@+id/MyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Hello" />
+      
         <TextView
             android:text="Movie Details"
             android:layout_width="match_parent"
             android:layout_height="264.0dp"
             android:id="@+id/textView1"
             android:layout_marginBottom="361.5dp" />
-        <EditText
+      
+      <!--  <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText1" />
+            android:id="@+id/editText1" /> -->
+      
     </LinearLayout>
 </RelativeLayout>
