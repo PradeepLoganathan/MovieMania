@@ -17,7 +17,7 @@ using System.Collections;
 
 namespace MovieMania.Droid
 {
-    [Activity(Label = "MovieGridViewActivity")]
+    [Activity(Label = "@string/app_name")]
     public class MovieGridViewActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

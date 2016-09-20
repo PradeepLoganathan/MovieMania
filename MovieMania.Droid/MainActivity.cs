@@ -12,12 +12,14 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace MovieMania.Droid
 {
-    [Activity(Label = "MovieMania.Droid",Icon = "@drawable/icon")]
+    [Activity(Label = "@string/app_name",Icon = "@drawable/icon")]
     public class MainActivity : AppCompatActivity
     {
         int count = 1;
         int movieid = 550;
-        Toolbar toolbar;
+        internal Toolbar toolbar;
+        internal Sample[] mSamples;
+        internal GridView mGridView;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -31,6 +33,15 @@ namespace MovieMania.Droid
             //TextView Tv = FindViewById<TextView>(Resource.Id.textView1);
 
             toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+
+            
+            mSamples = new Sample[] {
+                new Sample (Resource.String.navigationdraweractivity_title,
+                    Resource.String.navigationdraweractivity_description,
+                    this,
+                    typeof(NavigationDrawerActivity)),
+            };
+
 
             SetSupportActionBar(toolbar);
             SupportActionBar.Title = "Movie Mania";
@@ -93,6 +104,49 @@ namespace MovieMania.Droid
             this.intent = intent;
             this.titleResId = titleResId;
             this.descriptionResId = descriptionResId;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class SampleAdapter : BaseAdapter
+    {
+        private MainActivity owner;
+
+        public SampleAdapter(MainActivity owner) : base()
+        {
+            this.owner = owner;
+        }
+
+        public override int Count
+        {
+            get
+            {
+                return owner.mSamples.Length;
+            }
+        }
+
+
+        public override Java.Lang.Object GetItem(int position)
+        {
+            return owner.mSamples[position];
+        }
+
+        public override long GetItemId(int position)
+        {
+            return (long)owner.mSamples[position].GetHashCode();
+        }
+
+        public override View GetView(int position, View convertView, ViewGroup container)
+        {
+            if (convertView == null)
+            {
+                convertView = owner.LayoutInflater.Inflate(Resource.Layout.sample_dashboard_item, container, false);
+            }
+            convertView.FindViewById<TextView>(Android.Resource.Id.Text1).SetText(owner.mSamples[position].titleResId);
+            convertView.FindViewById<TextView>(Android.Resource.Id.Text2).SetText(owner.mSamples[position].descriptionResId);
+            return convertView;
         }
     }
 }

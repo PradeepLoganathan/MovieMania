@@ -1544,6 +1544,9 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f05004a
 			public const int highlight_alpha_material_light = 2131034186;
 			
+			// aapt resource value: 0x7f050070
+			public const int horizontal_page_margin = 2131034224;
+			
 			// aapt resource value: 0x7f050000
 			public const int item_touch_helper_max_drag_scroll_per_frame = 2131034112;
 			
@@ -1553,6 +1556,21 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f050002
 			public const int item_touch_helper_swipe_escape_velocity = 2131034114;
 			
+			// aapt resource value: 0x7f05006f
+			public const int margin_huge = 2131034223;
+			
+			// aapt resource value: 0x7f05006e
+			public const int margin_large = 2131034222;
+			
+			// aapt resource value: 0x7f05006d
+			public const int margin_medium = 2131034221;
+			
+			// aapt resource value: 0x7f05006c
+			public const int margin_small = 2131034220;
+			
+			// aapt resource value: 0x7f05006b
+			public const int margin_tiny = 2131034219;
+			
 			// aapt resource value: 0x7f05004b
 			public const int notification_large_icon_height = 2131034187;
 			
@@ -1561,6 +1579,9 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f05004d
 			public const int notification_subtext_size = 2131034189;
+			
+			// aapt resource value: 0x7f050071
+			public const int vertical_page_margin = 2131034225;
 			
 			static Dimension()
 			{
@@ -1812,11 +1833,14 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f02004e
 			public const int Icon = 2130837582;
 			
-			// aapt resource value: 0x7f020050
-			public const int notification_template_icon_bg = 2130837584;
+			// aapt resource value: 0x7f020051
+			public const int notification_template_icon_bg = 2130837585;
 			
 			// aapt resource value: 0x7f02004f
-			public const int Splash = 2130837583;
+			public const int sample_dashboard_item_background = 2130837583;
+			
+			// aapt resource value: 0x7f020050
+			public const int Splash = 2130837584;
 			
 			static Drawable()
 			{
@@ -2428,22 +2452,25 @@ namespace MovieMania.Droid
 			public const int notification_template_part_time = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int select_dialog_item_material = 2130903088;
+			public const int sample_dashboard_item = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int select_dialog_multichoice_material = 2130903089;
+			public const int select_dialog_item_material = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int select_dialog_singlechoice_material = 2130903090;
+			public const int select_dialog_multichoice_material = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int Splash = 2130903091;
+			public const int select_dialog_singlechoice_material = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int support_simple_spinner_dropdown_item = 2130903092;
+			public const int Splash = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int toolbar = 2130903093;
+			public const int support_simple_spinner_dropdown_item = 2130903093;
+			
+			// aapt resource value: 0x7f030036
+			public const int toolbar = 2130903094;
 			
 			static Layout()
 			{
@@ -2474,11 +2501,11 @@ namespace MovieMania.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f070018
-			public const int ApplicationName = 2131165208;
+			// aapt resource value: 0x7f070019
+			public const int ApplicationName = 2131165209;
 			
-			// aapt resource value: 0x7f070017
-			public const int Hello = 2131165207;
+			// aapt resource value: 0x7f070018
+			public const int Hello = 2131165208;
 			
 			// aapt resource value: 0x7f070000
 			public const int abc_action_bar_home_description = 2131165184;
@@ -2537,6 +2564,15 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f070012
 			public const int abc_toolbar_collapse_description = 2131165202;
 			
+			// aapt resource value: 0x7f07001c
+			public const int action_websearch = 2131165212;
+			
+			// aapt resource value: 0x7f070017
+			public const int app_name = 2131165207;
+			
+			// aapt resource value: 0x7f07001d
+			public const int app_not_available = 2131165213;
+			
 			// aapt resource value: 0x7f070014
 			public const int appbar_scrolling_view_behavior = 2131165204;
 			
@@ -2545,6 +2581,18 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f070016
 			public const int character_counter_pattern = 2131165206;
+			
+			// aapt resource value: 0x7f07001b
+			public const int drawer_close = 2131165211;
+			
+			// aapt resource value: 0x7f07001a
+			public const int drawer_open = 2131165210;
+			
+			// aapt resource value: 0x7f07001f
+			public const int navigationdraweractivity_description = 2131165215;
+			
+			// aapt resource value: 0x7f07001e
+			public const int navigationdraweractivity_title = 2131165214;
 			
 			// aapt resource value: 0x7f070013
 			public const int status_bar_notification_info_overflow = 2131165203;
@@ -3360,6 +3408,9 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f0900f7
 			public const int ThemeOverlay_AppCompat_Light = 2131296503;
 			
+			// aapt resource value: 0x7f09015a
+			public const int Widget = 2131296602;
+			
 			// aapt resource value: 0x7f0900f8
 			public const int Widget_AppCompat_ActionBar = 2131296504;
 			
@@ -3599,6 +3650,15 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f090156
 			public const int Widget_Design_TextInputLayout = 2131296598;
+			
+			// aapt resource value: 0x7f09015d
+			public const int Widget_SampleDashboard_Item = 2131296605;
+			
+			// aapt resource value: 0x7f09015c
+			public const int Widget_SampleDashboard_Item_Description = 2131296604;
+			
+			// aapt resource value: 0x7f09015b
+			public const int Widget_SampleDashboard_Item_Title = 2131296603;
 			
 			static Style()
 			{
