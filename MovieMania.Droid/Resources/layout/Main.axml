@@ -3,45 +3,64 @@
     xmlns:local="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-  
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-  
-    <LinearLayout
+
+   <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/main_content"
         android:layout_below="@id/toolbar">
-      
-        <android.support.design.widget.TextInputLayout
+
+     <!-- <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText
+          
+           <EditText
                 android:id="@+id/moviesearch"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="Movie Name" />
         </android.support.design.widget.TextInputLayout>
       
-        <Button
+       <Button
             android:id="@+id/MyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Hello" />
-      
-        <TextView
+            android:text="@string/Hello" /> -->
+     
+     <TextView style="@style/Widget.SampleMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/horizontal_page_margin"
+        android:layout_marginRight="@dimen/horizontal_page_margin"
+        android:layout_marginTop="@dimen/vertical_page_margin"
+        android:layout_marginBottom="@dimen/vertical_page_margin"
+        android:text="@string/intro_message" />
+              
+        <GridView
+            android:id="@android:id/list"
+            style="@style/Widget.SampleDashboard.Grid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/horizontal_page_margin"
+            android:paddingRight="@dimen/horizontal_page_margin"
+            android:paddingBottom="@dimen/vertical_page_margin"
+            android:scrollbarStyle="outsideOverlay" />
+
+  <!-- <TextView
             android:text="Movie Details"
             android:layout_width="match_parent"
             android:layout_height="264.0dp"
             android:id="@+id/textView1"
             android:layout_marginBottom="361.5dp" />
-      
-      <!--  <EditText
+  
+     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText1" /> -->
-      
     </LinearLayout>
 </RelativeLayout>

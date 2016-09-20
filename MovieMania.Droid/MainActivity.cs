@@ -13,7 +13,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 namespace MovieMania.Droid
 {
     [Activity(Label = "@string/app_name",Icon = "@drawable/icon")]
-    public class MainActivity : AppCompatActivity
+    public class MainActivity : AppCompatActivity, AdapterView.IOnItemClickListener
     {
         int count = 1;
         int movieid = 550;
@@ -40,14 +40,25 @@ namespace MovieMania.Droid
                     Resource.String.navigationdraweractivity_description,
                     this,
                     typeof(NavigationDrawerActivity)),
+
+                new Sample (Resource.String.navigationdraweractivity_title,
+                    Resource.String.navigationdraweractivity_description,
+                    this,
+                    typeof(NavigationDrawerActivity)),
+
+                new Sample (Resource.String.navigationdraweractivity_title,
+                    Resource.String.navigationdraweractivity_description,
+                    this,
+                    typeof(NavigationDrawerActivity)),
             };
 
 
             SetSupportActionBar(toolbar);
             SupportActionBar.Title = "Movie Mania";
 
-            
-
+            mGridView = FindViewById<GridView>(Android.Resource.Id.List);
+            mGridView.Adapter = new SampleAdapter(this);
+            mGridView.OnItemClickListener = this;
 
             LoadConfig.Load();
 
@@ -80,6 +91,11 @@ namespace MovieMania.Droid
         {
             Toast.MakeText(this, "Top ActionBar pressed: " + item.TitleFormatted, ToastLength.Short).Show();
             return base.OnOptionsItemSelected(item);
+        }
+
+        public void OnItemClick(AdapterView parent, View view, int position, long id)
+        {
+            StartActivity(mSamples[position].intent);
         }
     }
 

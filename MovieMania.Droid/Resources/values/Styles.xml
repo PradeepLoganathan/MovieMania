@@ -31,6 +31,16 @@
   <!-- Widget styling -->
 
   <style name="Widget" />
+
+  <style name="Widget.SampleDashboard.Grid" parent="Widget">
+    <item name="android:stretchMode">columnWidth</item>
+    <item name="android:columnWidth">200dp</item>
+    <item name="android:numColumns">auto_fit</item>
+    <item name="android:drawSelectorOnTop">true</item>
+    <item name="android:horizontalSpacing">@dimen/margin_medium</item>
+    <item name="android:verticalSpacing">@dimen/margin_medium</item>
+  </style>
+  
   
   <style name="Widget.SampleDashboard.Item.Title" parent="Widget">
     <item name="android:layout_marginBottom">@dimen/margin_tiny</item>
@@ -51,6 +61,11 @@
     <item name="android:paddingLeft">@dimen/margin_medium</item>
     <item name="android:paddingRight">@dimen/margin_medium</item>
     <item name="android:paddingBottom">@dimen/margin_medium</item>
+  </style>
+
+  <style name="Widget.SampleMessage">
+    <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    <item name="android:lineSpacingMultiplier">1.1</item>
   </style>
   
 </resources>
