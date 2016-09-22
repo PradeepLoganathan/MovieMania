@@ -1,168 +1,117 @@
-﻿using System;
-using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
+﻿
 using Android.Widget;
 using Android.OS;
-using MovieMania.Core;
-using System.Threading.Tasks;
+using Android.Support.Design.Widget;
+using Android.Support.V4.Widget;
 using Android.Support.V7.App;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Android.Views;
+using Android.App;
+using Android;
+using MovieMania.Droid;
 
 namespace MovieMania.Droid
 {
-    [Activity(Label = "@string/app_name",Icon = "@drawable/icon")]
-    public class MainActivity : AppCompatActivity, AdapterView.IOnItemClickListener
+    [Activity(Label = "MovieMania", MainLauncher = true, Icon = "@drawable/icon")]
+    public class MainActivity : AppCompatActivity
     {
-        int count = 1;
-        int movieid = 550;
-        internal Toolbar toolbar;
-        internal Sample[] mSamples;
-        internal GridView mGridView;
+        DrawerLayout drawerlayout;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            SetContentView(Droid.Resource.Layout.Main);
 
-            
-            SetContentView(Resource.Layout.Main);
+            drawerlayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
-            
-            //Button button = FindViewById<Button>(Resource.Id.MyButton);
-            //TextView Tv = FindViewById<TextView>(Resource.Id.textView1);
-
-            toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-
-            
-            mSamples = new Sample[] {
-                new Sample (Resource.String.navigationdraweractivity_title,
-                    Resource.String.navigationdraweractivity_description,
-                    this,
-                    typeof(NavigationDrawerActivity)),
-
-                new Sample (Resource.String.navigationdraweractivity_title,
-                    Resource.String.navigationdraweractivity_description,
-                    this,
-                    typeof(NavigationDrawerActivity)),
-
-                new Sample (Resource.String.navigationdraweractivity_title,
-                    Resource.String.navigationdraweractivity_description,
-                    this,
-                    typeof(NavigationDrawerActivity)),
-            };
-
+            var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.app_bar);
 
             SetSupportActionBar(toolbar);
-            SupportActionBar.Title = "Movie Mania";
 
-            mGridView = FindViewById<GridView>(Android.Resource.Id.List);
-            mGridView.Adapter = new SampleAdapter(this);
-            mGridView.OnItemClickListener = this;
+            SupportActionBar.SetTitle(Resource.String.app_name);
+            SupportActionBar.SetDefaultDisplayHomeAsUpEnabled(true);
+            SupportActionBar.SetDefaultDisplayHomeAsUpEnabled(true);
 
-            LoadConfig.Load();
+            var navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            navigationView.NavigationItemSelected += NavigationView_NavigationItemSelected;
 
-            //button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
-            //button.Click += delegate { this.GM(Tv); movieid++; };
+            // Create ActionBarDrawerToggle button and add it to the toolbar
+            var drawerToggle = new ActionBarDrawerToggle(this, drawerlayout, toolbar, Resource.String.open_drawer, Resource.String.close_drawer);
+            drawerlayout.SetDrawerListener(drawerToggle);
+            drawerToggle.SyncState();
 
-            //this.GM(Tv);             
+            //load default home screen
+            var ft = FragmentManager.BeginTransaction();
+            ft.AddToBackStack(null);
+            ft.Add(Resource.Id.HomeFrameLayout, new HomeFragment());
+            ft.Commit();
+
+
+
         }
 
-        public async void GM(TextView T)
+        private void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
         {
-            Movie m = new Movie();
-            Movie m1 = await m.GetMovie(movieid);
-            T.Text = m1.ToString();
+            switch (e.MenuItem.ItemId)
+            {
+                case (Resource.Id.nav_home):
+                    Toast.MakeText(this, "Home selected!", ToastLength.Short).Show();
+                    break;
+                case (Resource.Id.nav_messages):
+                    Toast.MakeText(this, "Message selected!", ToastLength.Short).Show();
+                    break;
+                case (Resource.Id.nav_friends):
+                    // React on 'Friends' selection
+                    break;
+            }
+
+            drawerlayout.CloseDrawers();
 
         }
 
-        /// <Docs>The options menu in which you place your items.</Docs>
-		/// <returns>To be added.</returns>
-		/// <summary>
-		/// This is the menu for the Toolbar/Action Bar to use
-		/// </summary>
-		/// <param name="menu">Menu.</param>
-		public override bool OnCreateOptionsMenu(IMenu menu)
+        //define custom title text
+        protected override void OnResume()
         {
-            MenuInflater.Inflate(Resource.Menu.home, menu);
+            SupportActionBar.SetTitle(Resource.String.app_name);
+            base.OnResume();
+        }
+
+        //add custom icon to tolbar
+        public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.action_menu, menu);
+            if (menu != null)
+            {
+                menu.FindItem(Resource.Id.action_refresh).SetVisible(true);
+                menu.FindItem(Resource.Id.action_attach).SetVisible(false);
+            }
             return base.OnCreateOptionsMenu(menu);
         }
+        //define action for tolbar icon press
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            Toast.MakeText(this, "Top ActionBar pressed: " + item.TitleFormatted, ToastLength.Short).Show();
-            return base.OnOptionsItemSelected(item);
-        }
-
-        public void OnItemClick(AdapterView parent, View view, int position, long id)
-        {
-            StartActivity(mSamples[position].intent);
-        }
-    }
-
-    internal class Sample : Java.Lang.Object
-    {
-        internal int titleResId;
-        internal int descriptionResId;
-        internal Intent intent;
-
-        public Sample(int titleResId, int descriptionResId, Intent intent)
-        {
-            Initialize(titleResId, descriptionResId, intent);
-        }
-
-        public Sample(int titleResId, int descriptionResId, Context c, Type t)
-        {
-            Initialize(titleResId, descriptionResId, new Intent(c, t));
-        }
-
-        private void Initialize(int titleResId, int descriptionResId, Intent intent)
-        {
-            this.intent = intent;
-            this.titleResId = titleResId;
-            this.descriptionResId = descriptionResId;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    internal class SampleAdapter : BaseAdapter
-    {
-        private MainActivity owner;
-
-        public SampleAdapter(MainActivity owner) : base()
-        {
-            this.owner = owner;
-        }
-
-        public override int Count
-        {
-            get
+            switch (item.ItemId)
             {
-                return owner.mSamples.Length;
+                case Android.Resource.Id.Home:
+                    //this.Activity.Finish();
+                    return true;
+                case Resource.Id.action_attach:
+                    //FnAttachImage();
+                    return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
             }
         }
-
-
-        public override Java.Lang.Object GetItem(int position)
+        //to avoid direct app exit on backpreesed and to show fragment from stack
+        public override void OnBackPressed()
         {
-            return owner.mSamples[position];
-        }
-
-        public override long GetItemId(int position)
-        {
-            return (long)owner.mSamples[position].GetHashCode();
-        }
-
-        public override View GetView(int position, View convertView, ViewGroup container)
-        {
-            if (convertView == null)
+            if (FragmentManager.BackStackEntryCount != 0)
             {
-                convertView = owner.LayoutInflater.Inflate(Resource.Layout.sample_dashboard_item, container, false);
+                FragmentManager.PopBackStack();// fragmentManager.popBackStack();
             }
-            convertView.FindViewById<TextView>(Android.Resource.Id.Text1).SetText(owner.mSamples[position].titleResId);
-            convertView.FindViewById<TextView>(Android.Resource.Id.Text2).SetText(owner.mSamples[position].descriptionResId);
-            return convertView;
+            else
+            {
+                base.OnBackPressed();
+            }
         }
     }
 }
