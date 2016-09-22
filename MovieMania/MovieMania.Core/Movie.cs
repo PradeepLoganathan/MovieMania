@@ -42,7 +42,7 @@ namespace MovieMania.Core
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    string url = LoadConfig.ConfigValues["BaseURL"] + "/movie/" + MovieID.ToString() + "?api_key=" + LoadConfig.ConfigValues["APPID"];
+                    string url = LoadConfig.ConfigValues["BaseURL"] + "movie/" + MovieID.ToString() + "?api_key=" + LoadConfig.ConfigValues["APPID"];
                     using (HttpResponseMessage response = await client.GetAsync(url))
                     using (HttpContent content = response.Content)
                     {

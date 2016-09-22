@@ -12,7 +12,10 @@ using Android.Support.V7.Widget;
 using LayoutManager = Android.Support.V7.Widget.RecyclerView.LayoutManager;
 
 using MovieMania.Core;
-
+using System.Threading.Tasks;
+using Android.Graphics;
+using System.Net;
+using System.Net.Http;
 
 namespace MovieMania.Droid
 {
@@ -31,30 +34,30 @@ namespace MovieMania.Droid
         PhotoAlbum mPhotoAlbum;
 
         //Create the Discover object
-
         Discover DiscReq;
-        DiscoverResponse DiscResp;
+        Discover DiscResp;
+
+
 
         public MainActivity()
         {
             LoadConfig.Load();
         }
 
-        protected override async void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
-            DiscResp = null;
-
+           
             // Instantiate the photo album:
             mPhotoAlbum = new PhotoAlbum();
 
             //Instantiate the Discover Objects
            
-            DiscReq = new Discover();
-            //DiscResp = await DiscReq.GoDiscover();
+            
 
-            SetContentView(Droid.Resource.Layout.Main);
+            
+            SetContentView(Resource.Layout.Main);
             layoutMgr = null;
 
             drawerlayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
@@ -75,6 +78,7 @@ namespace MovieMania.Droid
             drawerlayout.SetDrawerListener(drawerToggle);
             drawerToggle.SyncState();
 
+           
 
             //Load Recycler view as the Main view            
             mRecyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
@@ -84,6 +88,12 @@ namespace MovieMania.Droid
 
             // Plug the layout manager into the RecyclerView. Here it is a linear layout manager since the cards scroll vertically down
             mRecyclerView.SetLayoutManager(layoutMgr);
+
+            DiscReq = new Discover();
+            //var task = DiscReq.GoDiscover();
+            //DiscResp = task.Result;
+
+            DiscResp= Task.Run(DiscReq.GoDiscover).Result;
 
             mAdapter = new PhotoAlbumAdapter(mPhotoAlbum);
 
@@ -109,8 +119,10 @@ namespace MovieMania.Droid
             switch (e.MenuItem.ItemId)
             {
                 case (Resource.Id.nav_home):
-                    Toast.MakeText(this, "Home selected!", ToastLength.Short).Show();
-                    break;
+                    {
+                        Toast.MakeText(this, "Home selected!", ToastLength.Short).Show();
+                        break;
+                    }
                 case (Resource.Id.nav_messages):
                     Toast.MakeText(this, "Message selected!", ToastLength.Short).Show();
                     break;
@@ -170,11 +182,17 @@ namespace MovieMania.Droid
 
         // Underlying data set (a photo album):
         public PhotoAlbum mPhotoAlbum;
+        public Discover mDiscover;
 
         // Load the adapter with the data set (photo album) at construction time:
         public PhotoAlbumAdapter(PhotoAlbum photoAlbum)
         {
             mPhotoAlbum = photoAlbum;
+        }
+
+        public PhotoAlbumAdapter(Discover disc)
+        {
+            mDiscover = disc;
         }
 
         // Create a new photo CardView (invoked by the layout manager): 
@@ -199,12 +217,14 @@ namespace MovieMania.Droid
             // from this position in the photo album:
             vh.Image.SetImageResource(mPhotoAlbum[position].PhotoID);
             vh.Caption.Text = mPhotoAlbum[position].Caption;
+            //vh.Caption.Text = mDiscover.results[position].title;
         }
 
         // Return the number of photos available in the photo album:
         public override int ItemCount
         {
             get { return mPhotoAlbum.NumPhotos; }
+            //get { return mDiscover.results.Length; }
         }
 
         // Raise an event when the item-click takes place:
@@ -213,6 +233,8 @@ namespace MovieMania.Droid
             if (ItemClick != null)
                 ItemClick(this, position);
         }
+
+       
     }
 
     internal class PhotoAlbum
