@@ -23,6 +23,7 @@ namespace MovieMania.Core
 
             try
             {
+                //TODO : Make HTTPClient into a singleton or static instance
                 using (HttpClient client = new HttpClient())
                 {
                     string url = LoadConfig.ConfigValues["BaseURL"] + "discover/movie" + "?api_key=" + LoadConfig.ConfigValues["APPID"];
@@ -73,7 +74,7 @@ namespace MovieMania.Core
         public float vote_average { get; set; }
         public Bitmap Screen_Image { get; set; }
 
-        private async Task<Bitmap> GetImageBitmapFromUrlAsync(string url)
+        private async Task GetImageBitmapFromUrlAsync(string url)
         {
             Bitmap imageBitmap = null;
 
@@ -87,12 +88,12 @@ namespace MovieMania.Core
                 }
             }
 
-            return imageBitmap;
+          
         }
 
         public async void InflateImages()
         {
-            await this.GetImageBitmapFromUrlAsync(this.backdrop_path);
+            await this.GetImageBitmapFromUrlAsync(LoadConfig.ConfigValues["BaseURL"] + this.backdrop_path);
         }
     }
 
