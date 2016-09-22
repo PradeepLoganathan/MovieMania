@@ -15,15 +15,25 @@ namespace MovieMania.Core
         public int total_results { get; set; }
         public int total_pages { get; set; }
 
-        public async Task<Discover> GoDiscover()
+        public async Task<DiscoverResponse> GoDiscover()
         {
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync("http://api.themoviedb.org/3/discover/movie?"))
-            using (HttpContent content = response.Content)
+            try
             {
-                string result = await content.ReadAsStringAsync();
-                Discover discover = JsonConvert.DeserializeObject<Discover>(result);
-                return discover;                
+                using (HttpClient client = new HttpClient())
+                {
+                    string url = LoadConfig.ConfigValues["BaseURL"] + "Discover/movie/" + "?api_key=" + LoadConfig.ConfigValues["APPID"];
+                    using (HttpResponseMessage response = await client.GetAsync(url))
+                    using (HttpContent content = response.Content)
+                    {
+                        string result = await content.ReadAsStringAsync();
+                        DiscoverResponse discover = JsonConvert.DeserializeObject<DiscoverResponse>(result);
+                        return discover;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
     }

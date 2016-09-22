@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using Android.Widget;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -10,7 +10,9 @@ using Android;
 using MovieMania.Droid;
 using Android.Support.V7.Widget;
 using LayoutManager = Android.Support.V7.Widget.RecyclerView.LayoutManager;
-using System;
+
+using MovieMania.Core;
+
 
 namespace MovieMania.Droid
 {
@@ -28,29 +30,44 @@ namespace MovieMania.Droid
         // Photo album that is managed by the adapter:
         PhotoAlbum mPhotoAlbum;
 
-        protected override void OnCreate(Bundle bundle)
+        //Create the Discover object
+
+        Discover DiscReq;
+        DiscoverResponse DiscResp;
+
+        public MainActivity()
+        {
+            LoadConfig.Load();
+        }
+
+        protected override async void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
+            DiscResp = null;
 
             // Instantiate the photo album:
             mPhotoAlbum = new PhotoAlbum();
 
+            //Instantiate the Discover Objects
+           
+            DiscReq = new Discover();
+            //DiscResp = await DiscReq.GoDiscover();
 
             SetContentView(Droid.Resource.Layout.Main);
             layoutMgr = null;
 
-           
-
             drawerlayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
+            //Set up action bar TODO: Work on getting a search bar in the action bar
+
             var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.app_bar);
-
             SetSupportActionBar(toolbar);
-
             SupportActionBar.SetTitle(Resource.String.app_name);
             SupportActionBar.SetDefaultDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDefaultDisplayHomeAsUpEnabled(true);
 
+            //Load Navigation Drawer view 
             var navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.NavigationItemSelected += NavigationView_NavigationItemSelected;
             // Create ActionBarDrawerToggle button and add it to the toolbar
@@ -58,25 +75,15 @@ namespace MovieMania.Droid
             drawerlayout.SetDrawerListener(drawerToggle);
             drawerToggle.SyncState();
 
-            //load default home screen
-            /* var ft = FragmentManager.BeginTransaction();
-             ft.AddToBackStack(null);
-             ft.Add(Resource.Id.HomeFrameLayout, new HomeFragment());
-             ft.Commit();*/
 
-
-            /*******************************/
-
-            // RecyclerView instance that displays the photo album:
-            
+            //Load Recycler view as the Main view            
             mRecyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
 
             // Use the built-in linear layout manager:
             layoutMgr = new LinearLayoutManager(this);
 
-            // Plug the layout manager into the RecyclerView:
+            // Plug the layout manager into the RecyclerView. Here it is a linear layout manager since the cards scroll vertically down
             mRecyclerView.SetLayoutManager(layoutMgr);
-
 
             mAdapter = new PhotoAlbumAdapter(mPhotoAlbum);
 
@@ -152,14 +159,7 @@ namespace MovieMania.Droid
         //to avoid direct app exit on backpreesed and to show fragment from stack
         public override void OnBackPressed()
         {
-            if (FragmentManager.BackStackEntryCount != 0)
-            {
-                FragmentManager.PopBackStack();// fragmentManager.popBackStack();
-            }
-            else
-            {
-                base.OnBackPressed();
-            }
+           
         }
     }
 
