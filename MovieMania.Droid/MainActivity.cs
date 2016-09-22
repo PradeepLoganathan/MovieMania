@@ -178,8 +178,7 @@ namespace MovieMania.Droid
         }
 
         // Create a new photo CardView (invoked by the layout manager): 
-        public override RecyclerView.ViewHolder
-            OnCreateViewHolder(ViewGroup parent, int viewType)
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             // Inflate the CardView for the photo:
             View itemView = LayoutInflater.From(parent.Context).

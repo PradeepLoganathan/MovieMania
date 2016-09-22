@@ -1971,8 +1971,8 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f02006a
 			public const int museum_and_castle = 2130837610;
 			
-			// aapt resource value: 0x7f02007d
-			public const int notification_template_icon_bg = 2130837629;
+			// aapt resource value: 0x7f02007f
+			public const int notification_template_icon_bg = 2130837631;
 			
 			// aapt resource value: 0x7f02006b
 			public const int notre_dame = 2130837611;
@@ -2008,25 +2008,31 @@ namespace MovieMania.Droid
 			public const int seine_river = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int to_notre_dame = 2130837622;
+			public const int settings_about = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int tower_of_london = 2130837623;
+			public const int settings_account = 2130837623;
 			
 			// aapt resource value: 0x7f020078
-			public const int tower_visitors = 2130837624;
+			public const int to_notre_dame = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int versailles_fountains = 2130837625;
+			public const int tower_of_london = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int versailles_gates = 2130837626;
+			public const int tower_visitors = 2130837626;
 			
 			// aapt resource value: 0x7f02007b
-			public const int victoria_albert = 2130837627;
+			public const int versailles_fountains = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int view_from_holyrood_park = 2130837628;
+			public const int versailles_gates = 2130837628;
+			
+			// aapt resource value: 0x7f02007d
+			public const int victoria_albert = 2130837629;
+			
+			// aapt resource value: 0x7f02007e
+			public const int view_from_holyrood_park = 2130837630;
 			
 			static Drawable()
 			{
@@ -2265,9 +2271,6 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f060016
 			public const int multiply = 2131099670;
-			
-			// aapt resource value: 0x7f06008b
-			public const int nav_SearchApartment = 2131099787;
 			
 			// aapt resource value: 0x7f06008a
 			public const int nav_friends = 2131099786;
