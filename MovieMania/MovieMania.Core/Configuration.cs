@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -21,7 +20,7 @@ namespace MovieMania.Core
             using (HttpContent content = response.Content)
             {
                 string result = await content.ReadAsStringAsync();
-                Movie Movielist = JsonConvert.DeserializeObject<Movie>(result);
+                //Movie Movielist = JsonConvert.DeserializeObject<Movie>(result);
                 //await context.Response.WriteAsync(result);
             }
         }

@@ -2,11 +2,12 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+
+using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace MovieMania.Core
 {
@@ -26,16 +27,50 @@ namespace MovieMania.Core
                 //TODO : Make HTTPClient into a singleton or static instance
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
                     string url = LoadConfig.ConfigValues["BaseURL"] + "discover/movie" + "?api_key=" + LoadConfig.ConfigValues["APPID"];
                     using (HttpResponseMessage response = await client.GetAsync(url))
                     using (HttpContent content = response.Content)
                     {
-                        string result = await content.ReadAsStringAsync();
-                        discresp = JsonConvert.DeserializeObject<Discover>(result);
-                        foreach (DiscoverResponse dr in discresp)
-                            dr.InflateImages();
+                        string convertresponse = await content.ReadAsStringAsync();
+                        dynamic dynObj = JsonConvert.DeserializeObject(convertresponse);
                         
-                        return discresp;
+
+                        //JContainer is the base class
+                        var jObj = (JObject)dynObj;
+
+                        var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jObj.ToString());
+
+                        Debug.WriteLine("===============================================================================================");
+
+                        foreach (JToken token in jObj.Children())
+                        {
+                            if (token is JProperty)
+                            {
+                                var prop = token as JProperty;
+                                Debug.WriteLine("{0}={1}", prop.Name, prop.Value);
+                            }
+                        }
+
+                        Debug.WriteLine("===============================================================================================");
+
+                        Debug.WriteLine("***********************************************************************************************");
+
+                        foreach (var token in dict)
+                        {
+                            Debug.WriteLine("{0}={1}", token.Key, token.Value);
+                            if (token.Key.Contains("[0:] page"))
+                                this.page = (int)token.Value;
+                            else if (token.Key.Contains("[0:] results"))
+                                this.results = (DiscoverResponse[])token.Value;
+                        }
+
+                        Debug.WriteLine("***********************************************************************************************");
+
+                        /*foreach (DiscoverResponse dr in discresp1)
+                            dr.InflateImages();*/
+
+                        return (Discover)dynObj;
                     }
                 }
             }
