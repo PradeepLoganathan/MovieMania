@@ -5,7 +5,7 @@
 
 A Xamarin cross platform app for Android, IOS and Windows Universal systems. This uses the MovieDB API and is a movie mashup app.
 
-![](./blob/master/59cd566b.png =100x20)
+![](./59cd566b.png =100x20)
 ![ScreenShot](https://github.com/PradeepLoganathan/MovieMania/blob/master/898d0ca1.png)
 ![ScreenShot](https://github.com/PradeepLoganathan/MovieMania/blob/master/b89cd1ed.png )
 
