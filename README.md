@@ -9,6 +9,7 @@ The app can be installed from https://play.google.com/store/apps/details?id=com.
 ![](./59cd566b.png =100x20)
 ![ScreenShot](https://github.com/PradeepLoganathan/MovieMania/blob/master/898d0ca1.png)
 ![ScreenShot](https://github.com/PradeepLoganathan/MovieMania/blob/master/b89cd1ed.png )
+![ScreenShot](https://github.com/PradeepLoganathan/MovieMania/blob/master/screenshot14.png )
 
 
 
