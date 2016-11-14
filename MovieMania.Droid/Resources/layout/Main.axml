@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -22,17 +21,17 @@
             android:orientation="vertical">
             <include
                 layout="@layout/app_bar" />
-            <!--<FrameLayout
+        <!--<FrameLayout
                 android:id="@+id/HomeFrameLayout"
                 android:minWidth="25px"
                 android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />-->
-          <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:scrollbars="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:scrollbars="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
         </LinearLayout>
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
@@ -42,4 +41,8 @@
             app:menu="@menu/navmenu"
             app:headerLayout="@layout/headerdrawerlayout" />
     </android.support.v4.widget.DrawerLayout>
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 </LinearLayout>

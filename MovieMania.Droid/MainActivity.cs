@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Graphics;
 using Android.Widget;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -6,82 +7,90 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.App;
-using Android;
-using MovieMania.Droid;
 using Android.Support.V7.Widget;
-using LayoutManager = Android.Support.V7.Widget.RecyclerView.LayoutManager;
-
-using MovieMania.Core;
-using System.Threading.Tasks;
-using Android.Graphics;
 using System.Net;
-using System.Net.Http;
+using MovieMania.Core.Client;
+using MovieMania.Core.General;
+using MovieMania.Core.Search;
+using System.IO;
+using Android.Content;
+using LayoutManager = Android.Support.V7.Widget.RecyclerView.LayoutManager;
+using AlertDialog = Android.Support.V7.App.AlertDialog;
+using SearchView = Android.Support.V7.Widget.SearchView;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Android.Support.V4.View;
+using Android.Net;
+using Android.Runtime;
 
+//test
 namespace MovieMania.Droid
 {
+    #region MainActivity
     [Activity(Label = "MovieMania", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : AppCompatActivity
     {
         DrawerLayout drawerlayout;
         RecyclerView mRecyclerView;
+        MovieManiaClient client;
+        private SearchView _searchView;
+        private ListView _listView;
+        
+
         // Layout manager that lays out each card in the RecyclerView:
         public LayoutManager layoutMgr;
+        int MovieNum;
 
         // Adapter that accesses the data set (a photo album):
-        PhotoAlbumAdapter mAdapter;
-
-        // Photo album that is managed by the adapter:
-        PhotoAlbum mPhotoAlbum;
-
-        //Create the Discover object
-        Discover DiscReq;
-        Discover DiscResp;
-
-
+        MovieAlbumAdapter mAdapter;
+       
+        SearchContainer<SearchMovie> results;
 
         public MainActivity()
         {
-            LoadConfig.Load();
+           
+        }
+
+        private bool IsOnline()
+        {
+            ConnectivityManager connectivityManager = (ConnectivityManager)GetSystemService(ConnectivityService);
+            NetworkInfo activeConnection = connectivityManager.ActiveNetworkInfo;
+            return (activeConnection != null) && activeConnection.IsConnected;
         }
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
-           
-            // Instantiate the photo album:
-            mPhotoAlbum = new PhotoAlbum();
-
-            //Instantiate the Discover Objects
-           
-            
-
-            
             SetContentView(Resource.Layout.Main);
             layoutMgr = null;
 
+
+            #region Layout Setup
             drawerlayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
-            //Set up action bar TODO: Work on getting a search bar in the action bar
+            //Set up action bar TODO: Work on getting a search bar in the action bar -- Done
 
-            var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.app_bar);
-            SetSupportActionBar(toolbar);
+           Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.app_bar);
+            SetSupportActionBar(toolbar);           
             SupportActionBar.SetTitle(Resource.String.app_name);
+
+            // enabling action bar app icon and behaving it as toggle button
             SupportActionBar.SetDefaultDisplayHomeAsUpEnabled(true);
-            SupportActionBar.SetDefaultDisplayHomeAsUpEnabled(true);
+            SupportActionBar.SetHomeButtonEnabled(true);
+
 
             //Load Navigation Drawer view 
             var navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.NavigationItemSelected += NavigationView_NavigationItemSelected;
+
             // Create ActionBarDrawerToggle button and add it to the toolbar
             var drawerToggle = new ActionBarDrawerToggle(this, drawerlayout, toolbar, Resource.String.open_drawer, Resource.String.close_drawer);
             drawerlayout.SetDrawerListener(drawerToggle);
             drawerToggle.SyncState();
-
-           
+            #endregion
 
             //Load Recycler view as the Main view            
             mRecyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
+            _listView = FindViewById<ListView>(Resource.Id.listview);
 
             // Use the built-in linear layout manager:
             layoutMgr = new LinearLayoutManager(this);
@@ -89,31 +98,135 @@ namespace MovieMania.Droid
             // Plug the layout manager into the RecyclerView. Here it is a linear layout manager since the cards scroll vertically down
             mRecyclerView.SetLayoutManager(layoutMgr);
 
-            DiscReq = new Discover();
-            //var task = DiscReq.GoDiscover();
-            //DiscResp = task.Result;
+            //var onScrollListener = new XamarinRecyclerViewOnScrollListener(layoutMgr);
 
-            DiscResp= Task.Run(DiscReq.GoDiscover).Result;
 
-            mAdapter = new PhotoAlbumAdapter(mPhotoAlbum);
+            Random r = new Random();
+            int nYear = r.Next(1910, System.DateTime.Now.Year);           
+            Snackbar.Make(mRecyclerView, "Popular movies of the year " + nYear.ToString()+ ".", Snackbar.LengthLong).SetAction("OK", action => { }).Show();
 
+            if (!IsOnline())
+            {
+                var builder = new AlertDialog.Builder(this);
+
+                builder.SetTitle("Hello Dialog")
+                 .SetMessage("Is this material design?")
+                 .SetPositiveButton("Yes", delegate { Console.WriteLine("Yes"); })
+                 .SetNegativeButton("No", delegate { Console.WriteLine("No"); });
+
+                builder.Create().Show();
+            }
+
+            client = CreateDiscoverClient(nYear);
+
+            //Create an adapter which takes a collection of movies 
+            //and within the adapter set the poster and the movie title
             mAdapter.ItemClick += OnItemClick;
+            mAdapter.Client = client;
+            mAdapter._MainActivity = this;
 
             // Plug the adapter into the RecyclerView:
             mRecyclerView.SetAdapter(mAdapter);
 
+        }
 
+        private void HandleOkPress(object sender, DialogClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
+        private void HandleCancelPress(object sender, DialogClickEventArgs e)
+        {
+            Finish();
+        }
+
+        private MovieManiaClient CreateDiscoverClient(int nYear)
+        {
+            MovieManiaClient _client;
+
+            _client = new MovieManiaClient("4a6dc18b5a3d33c852ec14005d8655d7");
+            try
+            {
+                if (!_client.HasConfig)
+                    _client.GetConfig();
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            
+
+            results = _client.DiscoverMoviesAsync().WhereAnyReleaseDateIsInYear(nYear).IncludeAdultMovies(false).Query().Result;
+            this.mAdapter = new MovieAlbumAdapter(results);
+            this.mAdapter.movies = results;
+            return _client;
+        }
+
+        private MovieManiaClient CreateSearchClient(string Query)
+        {
+            MovieManiaClient _client;
+
+            _client = new MovieManiaClient("");
+            try
+            {
+                if (!_client.HasConfig)
+                    _client.GetConfig();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            results = _client.SearchMovieAsync(Query).Result;
+            this.mAdapter.movies.Results.Clear();
+            this.mAdapter.movies = results;
+            this.mRecyclerView.RemoveAllViews();
+            this.mAdapter.NotifyItemRangeRemoved(0,20);
+            this.mAdapter.NotifyItemRangeChanged(0, results.TotalResults);
+            this.mAdapter.NotifyDataSetChanged();
+            mRecyclerView.Invalidate();
+            return _client;
+        }
+
+        public System.Uri GetImageUrl(string size, string filePath)
+        {
+            string baseUrl = client.Config.Images.BaseUrl;
+            return new System.Uri(baseUrl + size + filePath);
         }
 
         // Handler for the item click event:
         void OnItemClick(object sender, int position)
         {
-            // Display a toast that briefly shows the enumeration of the selected photo:
-            int photoNum = position + 1;
-            Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
+            // Display a toast that briefly shows the enumeration of the selected movie
+            MovieNum = position + 1;
+            Toast.MakeText(this, ((results.Results[position].VoteAverage)/2).ToString(), ToastLength.Short).Show();
         }
 
+        /*void MakeImage()
+        {
+            /*Bitmap.Config c = new Bitmap.Config();
+
+            Bitmap bmp = Bitmap.CreateBitmap(70, 90, );
+
+            
+            using (Bitmap bmp = new Bitmap())
+            {
+                RectangleF rectf = new RectangleF(70, 90, 90, 50);
+
+                Graphics g = Graphics.FromImage(bmp);
+
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.DrawString("yourText", new Font("Tahoma", 8), Brushes.Black, rectf);
+
+                g.Flush();
+
+                image.Image = bmp;
+            }
+        }*/
+
+       
         private void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
         {
             switch (e.MenuItem.ItemId)
@@ -123,17 +236,21 @@ namespace MovieMania.Droid
                         Toast.MakeText(this, "Home selected!", ToastLength.Short).Show();
                         break;
                     }
-                case (Resource.Id.nav_messages):
-                    Toast.MakeText(this, "Message selected!", ToastLength.Short).Show();
-                    break;
-                case (Resource.Id.nav_friends):
-                    // React on 'Friends' selection
-                    break;
+                case (Resource.Id.nav_settings):
+                    {
+                        Toast.MakeText(this, "Settings selected!", ToastLength.Short).Show();
+                        break;
+                    }
+                case (Resource.Id.nav_info):
+                    {
+                        this.About();
+                        break;
+                    }
             }
 
             drawerlayout.CloseDrawers();
 
-        }
+        }       
 
         //define custom title text
         protected override void OnResume()
@@ -142,57 +259,157 @@ namespace MovieMania.Droid
             base.OnResume();
         }
 
-        //add custom icon to tolbar
-        public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
+
+        public override void OnBackPressed()
         {
+            if (!_searchView.Iconified)
+                _searchView.Iconified = true;
+            else
+                base.OnBackPressed();
+        }
+
+        #region Toolbar
+        //add custom icons (Refresh and Share) to toolbar
+        public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
+        {   
             MenuInflater.Inflate(Resource.Menu.action_menu, menu);
-            if (menu != null)
+
+           /* if (menu != null)
             {
-                menu.FindItem(Resource.Id.action_refresh).SetVisible(true);
-                menu.FindItem(Resource.Id.action_attach).SetVisible(false);
-            }
+                menu.FindItem(Resource.Id.action_search).SetVisible(true);
+                menu.FindItem(Resource.Id.refresh).SetVisible(true);
+                menu.FindItem(Resource.Id.action_share).SetVisible(true);
+                
+            }*/
+
+            var item = menu.FindItem(Resource.Id.action_search);
+            var test = MenuItemCompat.GetActionView(item);
+            _searchView = test.JavaCast<Android.Support.V7.Widget.SearchView>();
+            _searchView.Visibility = ViewStates.Visible;
+            var visible = _searchView.IsShown;
+            _searchView.QueryTextChange += _searchView_QueryTextChange;
+            _searchView.QueryTextSubmit += _searchView_QueryTextSubmit;
+          
+
+
             return base.OnCreateOptionsMenu(menu);
         }
-        //define action for tolbar icon press
+
+        private void _searchView_QueryTextSubmit(object sender, SearchView.QueryTextSubmitEventArgs e)
+        {
+            //Toast.MakeText(this, "Query text submitted", ToastLength.Long).Show();
+            // StartActivity()
+            /*var SearchActivity = new Intent(this, typeof(MovieSearchActivity));
+            SearchActivity.PutExtra("MovieName", e.Query);
+            StartActivity(SearchActivity);*/
+            CreateSearchClient(e.Query);
+        }
+
+        private void _searchView_QueryTextChange(object sender, SearchView.QueryTextChangeEventArgs e)
+        {
+            
+        }
+
+        //define action for toolbar icon press
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
             {
-                case Android.Resource.Id.Home:
-                    //this.Activity.Finish();
+                case Resource.Id.action_search:
+                    {
+                      
+                        return true;
+                    }
+                case Resource.Id.refresh:
+                    this.Recreate();
                     return true;
-                case Resource.Id.action_attach:
-                    //FnAttachImage();
+                case Resource.Id.action_share:
+                    Share("Movie Information", "Movie information from MovieMania");
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);
             }
         }
-        //to avoid direct app exit on backpreesed and to show fragment from stack
-        public override void OnBackPressed()
-        {
-           
-        }
-    }
 
-    internal class PhotoAlbumAdapter : RecyclerView.Adapter
+        public void Share(string title, string content)
+        {
+
+            System.Uri imageuri = GetImageUrl("w185", results.Results[MovieNum].PosterPath);
+
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(content))
+                return;
+
+            Bitmap b = GetImageBitmapFromUrl(imageuri);
+
+            var tempFilename = results.Results[MovieNum].PosterPath.TrimStart('/');
+            var sdCardPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+            //var documentsDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            //string pngFilename = System.IO.Path.Combine(documentsDirectory, imageName + ".png");
+            var filePath = System.IO.Path.Combine(sdCardPath, tempFilename);
+            using (var os = new FileStream(filePath, FileMode.Create))
+            {
+                b.Compress(Bitmap.CompressFormat.Png, 100, os);
+            }
+            b.Dispose();
+
+            var imageUri = Android.Net.Uri.Parse($"file://{sdCardPath}/{tempFilename}");
+            var sharingIntent = new Intent();
+            sharingIntent.SetAction(Intent.ActionSend);
+            sharingIntent.SetType("message/rfc822");
+            sharingIntent.PutExtra(Intent.ExtraEmail, new String[] { "" });
+            sharingIntent.PutExtra(Intent.ExtraSubject, "Movie information from Movie Mania app");
+            sharingIntent.PutExtra(Intent.ExtraText, "Thanks for sharing from The MovieMania App.Download from Playstore https://play.google.com/store/apps/details?id=com.pradeeploganathan.moviemania");
+            sharingIntent.AddFlags(ActivityFlags.GrantReadUriPermission);
+            sharingIntent.PutExtra(Intent.ExtraStream, imageUri);
+            StartActivity(Intent.CreateChooser(sharingIntent, title));
+            //File fdelete = new File(filePath);
+        }
+
+        public void About()
+        {
+            var uri = Android.Net.Uri.Parse("http://pradeeploganathan.com");
+            var i = new Intent(Intent.ActionView, uri);
+            StartActivity(i);
+        }
+
+        #endregion
+
+        Bitmap GetImageBitmapFromUrl(System.Uri url)
+        {
+            Bitmap imageBitmap = null;
+
+            using (var webClient = new WebClient())
+            {
+                var imageBytes = webClient.DownloadData(url);
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                }
+            }
+
+            return imageBitmap;
+        }
+
+        
+    }
+    #endregion
+
+    #region MovieAlbumAdapter
+
+    internal class MovieAlbumAdapter : RecyclerView.Adapter
     {
         // Event handler for item clicks:
         public event EventHandler<int> ItemClick;
+        public SearchContainer<SearchMovie> movies;
+        private MovieViewHolder vh;
+        public Activity _MainActivity;
 
-        // Underlying data set (a photo album):
-        public PhotoAlbum mPhotoAlbum;
-        public Discover mDiscover;
+        public MovieManiaClient Client { get; internal set; }
 
-        // Load the adapter with the data set (photo album) at construction time:
-        public PhotoAlbumAdapter(PhotoAlbum photoAlbum)
+        public MovieAlbumAdapter(SearchContainer<SearchMovie> discovermovies)
         {
-            mPhotoAlbum = photoAlbum;
-        }
+            movies = discovermovies;
 
-        public PhotoAlbumAdapter(Discover disc)
-        {
-            mDiscover = disc;
         }
 
         // Create a new photo CardView (invoked by the layout manager): 
@@ -204,28 +421,54 @@ namespace MovieMania.Droid
 
             // Create a ViewHolder to find and hold these view references, and 
             // register OnClick with the view holder:
-            PhotoViewHolder vh = new PhotoViewHolder(itemView, OnClick);
+            vh = new MovieViewHolder(itemView, OnClick);
             return vh;
         }
 
         // Fill in the contents of the photo card (invoked by the layout manager):
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            PhotoViewHolder vh = holder as PhotoViewHolder;
+            MovieViewHolder vh = holder as MovieViewHolder;
+            vh.MovieID = movies.Results[position].Id;
+            vh._MainActivity = _MainActivity;
+
+
 
             // Set the ImageView and TextView in this ViewHolder's CardView 
-            // from this position in the photo album:
-            vh.Image.SetImageResource(mPhotoAlbum[position].PhotoID);
-            vh.Caption.Text = mPhotoAlbum[position].Caption;
-            //vh.Caption.Text = mDiscover.results[position].title;
+            // from this position in the Movie album
+
+            if (DateTime.Today > new DateTime(2015, 11, 16))
+            {
+                System.Uri imageuri = GetImageUrl("w185", movies.Results[position].PosterPath);
+                vh.Image.SetImageBitmap(GetImageBitmapFromUrl(imageuri));
+            }
+            else
+            {
+                vh.Image.SetImageBitmap(CreateImage(70, 90, movies.Results[position].Title));
+                //vh.Image.SetImageBitmap(textAsBitmap(movies.Results[position].Title, 10));
+            }
+
+            vh.Caption.Text = movies.Results[position].Title;
+            vh.ratingbar.Rating = (float)((movies.Results[position].VoteAverage)/2);
+            
+        }
+
+        public System.Uri GetImageUrl(string size, string filePath)
+        {
+            string baseUrl = Client.Config.Images.BaseUrl;
+            return new System.Uri(baseUrl + size + filePath);
         }
 
         // Return the number of photos available in the photo album:
         public override int ItemCount
         {
-            get { return mPhotoAlbum.NumPhotos; }
+            get { return movies.Results.Count; }
+
+            //get { return mPhotoAlbum.NumPhotos; }
             //get { return mDiscover.results.Length; }
         }
+
+        
 
         // Raise an event when the item-click takes place:
         void OnClick(int position)
@@ -234,193 +477,137 @@ namespace MovieMania.Droid
                 ItemClick(this, position);
         }
 
-       
-    }
-
-    internal class PhotoAlbum
-    {
-        // Built-in photo collection - this could be replaced with
-        // a photo database:
-
-        static Photo[] mBuiltInPhotos = {
-            new Photo { mPhotoID = Resource.Drawable.buckingham_guards,
-                        mCaption = "Buckingham Palace" },
-            new Photo { mPhotoID = Resource.Drawable.la_tour_eiffel,
-                        mCaption = "The Eiffel Tower" },
-            new Photo { mPhotoID = Resource.Drawable.louvre_1,
-                        mCaption = "The Louvre" },
-            new Photo { mPhotoID = Resource.Drawable.before_mobile_phones,
-                        mCaption = "Before mobile phones" },
-            new Photo { mPhotoID = Resource.Drawable.big_ben_1,
-                        mCaption = "Big Ben skyline" },
-            new Photo { mPhotoID = Resource.Drawable.big_ben_2,
-                        mCaption = "Big Ben from below" },
-            new Photo { mPhotoID = Resource.Drawable.london_eye,
-                        mCaption = "The London Eye" },
-            new Photo { mPhotoID = Resource.Drawable.eurostar,
-                        mCaption = "Eurostar Train" },
-            new Photo { mPhotoID = Resource.Drawable.arc_de_triomphe,
-                        mCaption = "Arc de Triomphe" },
-            new Photo { mPhotoID = Resource.Drawable.louvre_2,
-                        mCaption = "Inside the Louvre" },
-            new Photo { mPhotoID = Resource.Drawable.versailles_fountains,
-                        mCaption = "Versailles fountains" },
-            new Photo { mPhotoID = Resource.Drawable.modest_accomodations,
-                        mCaption = "Modest accomodations" },
-            new Photo { mPhotoID = Resource.Drawable.notre_dame,
-                        mCaption = "Notre Dame" },
-            new Photo { mPhotoID = Resource.Drawable.inside_notre_dame,
-                        mCaption = "Inside Notre Dame" },
-            new Photo { mPhotoID = Resource.Drawable.seine_river,
-                        mCaption = "The Seine" },
-            new Photo { mPhotoID = Resource.Drawable.rue_cler,
-                        mCaption = "Rue Cler" },
-            new Photo { mPhotoID = Resource.Drawable.champ_elysees,
-                        mCaption = "The Avenue des Champs-Elysees" },
-            new Photo { mPhotoID = Resource.Drawable.seine_barge,
-                        mCaption = "Seine barge" },
-            new Photo { mPhotoID = Resource.Drawable.versailles_gates,
-                        mCaption = "Gates of Versailles" },
-            new Photo { mPhotoID = Resource.Drawable.edinburgh_castle_2,
-                        mCaption = "Edinburgh Castle" },
-            new Photo { mPhotoID = Resource.Drawable.edinburgh_castle_1,
-                        mCaption = "Edinburgh Castle up close" },
-            new Photo { mPhotoID = Resource.Drawable.old_meets_new,
-                        mCaption = "Old meets new" },
-            new Photo { mPhotoID = Resource.Drawable.edinburgh_from_on_high,
-                        mCaption = "Edinburgh from on high" },
-            new Photo { mPhotoID = Resource.Drawable.edinburgh_station,
-                        mCaption = "Edinburgh station" },
-            new Photo { mPhotoID = Resource.Drawable.scott_monument,
-                        mCaption = "Scott Monument" },
-            new Photo { mPhotoID = Resource.Drawable.view_from_holyrood_park,
-                        mCaption = "View from Holyrood Park" },
-            new Photo { mPhotoID = Resource.Drawable.tower_of_london,
-                        mCaption = "Outside the Tower of London" },
-            new Photo { mPhotoID = Resource.Drawable.tower_visitors,
-                        mCaption = "Tower of London visitors" },
-            new Photo { mPhotoID = Resource.Drawable.one_o_clock_gun,
-                        mCaption = "One O'Clock Gun" },
-            new Photo { mPhotoID = Resource.Drawable.victoria_albert,
-                        mCaption = "Victoria and Albert Museum" },
-            new Photo { mPhotoID = Resource.Drawable.royal_mile,
-                        mCaption = "The Royal Mile" },
-            new Photo { mPhotoID = Resource.Drawable.museum_and_castle,
-                        mCaption = "Edinburgh Museum and Castle" },
-            new Photo { mPhotoID = Resource.Drawable.portcullis_gate,
-                        mCaption = "Portcullis Gate" },
-            new Photo { mPhotoID = Resource.Drawable.to_notre_dame,
-                        mCaption = "Left or right?" },
-            new Photo { mPhotoID = Resource.Drawable.pompidou_centre,
-                        mCaption = "Pompidou Centre" },
-            new Photo { mPhotoID = Resource.Drawable.heres_lookin_at_ya,
-                        mCaption = "Here's Lookin' at Ya!" },
-            };
-
-        // Array of photos that make up the album:
-        private Photo[] mPhotos;
-
-        // Random number generator for shuffling the photos:
-        Random mRandom;
-
-        // Create an instance copy of the built-in photo list and
-        // create the random number generator:
-        public PhotoAlbum()
+        //Returns a Bitmap object from the url
+        private Bitmap GetImageBitmapFromUrl(System.Uri url)
         {
-            mPhotos = mBuiltInPhotos;
-            mRandom = new Random();
-        }
+            Bitmap imageBitmap = null;
 
-        // Return the number of photos in the photo album:
-        public int NumPhotos
-        {
-            get { return mPhotos.Length; }
-        }
-
-        // Indexer (read only) for accessing a photo:
-        public Photo this[int i]
-        {
-            get { return mPhotos[i]; }
-        }
-
-        // Pick a random photo and swap it with the top:
-        public int RandomSwap()
-        {
-            // Save the photo at the top:
-            Photo tmpPhoto = mPhotos[0];
-
-            // Generate a next random index between 1 and 
-            // Length (noninclusive):
-            int rnd = mRandom.Next(1, mPhotos.Length);
-
-            // Exchange top photo with randomly-chosen photo:
-            mPhotos[0] = mPhotos[rnd];
-            mPhotos[rnd] = tmpPhoto;
-
-            // Return the index of which photo was swapped with the top:
-            return rnd;
-        }
-
-        // Shuffle the order of the photos:
-        public void Shuffle()
-        {
-            // Use the Fisher-Yates shuffle algorithm:
-            for (int idx = 0; idx < mPhotos.Length; ++idx)
+            try
             {
-                // Save the photo at idx:
-                Photo tmpPhoto = mPhotos[idx];
+                using (var webClient = new WebClient())
+                {
+                    var imageBytes = webClient.DownloadData(url);
+                    if (imageBytes != null && imageBytes.Length > 0)
+                    {
+                        imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                    }
+                }
 
-                // Generate a next random index between idx (inclusive) and 
-                // Length (noninclusive):
-                int rnd = mRandom.Next(idx, mPhotos.Length);
-
-                // Exchange photo at idx with randomly-chosen (later) photo:
-                mPhotos[idx] = mPhotos[rnd];
-                mPhotos[rnd] = tmpPhoto;
+                return imageBitmap;
+            }
+            catch (Exception e)
+            {
+                //TODO - Add code to return a default bitmap
+                return CreateImage(70, 90, "No Poster");
+                
             }
         }
-    }
 
-    internal class Photo
-    {
-        // Photo ID for this photo:
-        public int mPhotoID;
-
-        // Caption text for this photo:
-        public string mCaption;
-
-        // Return the ID of the photo:
-        public int PhotoID
+        public Bitmap CreateImage(int width, int height, String name)
         {
-            get { return mPhotoID; }
+            Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
+            Canvas canvas = new Canvas(bitmap);
+            Paint paint2 = new Paint();
+            paint2.Color = Color.Black;
+            canvas.DrawRect(0F, 0F, (float)width, (float)height, paint2);
+            Paint paint = new Paint();
+            paint.Color = Color.White;
+            paint.TextSize = 12;
+            paint.TextScaleX = 1;
+            canvas.DrawText(name, 10, 15, paint);
+            return bitmap;
         }
 
-        // Return the Caption of the photo:
-        public string Caption
+       public Bitmap textAsBitmap(String text, float textSize)
         {
-            get { return mCaption; }
+            Paint paint = new Paint(PaintFlags.AntiAlias);
+            paint.TextSize = textSize;
+            paint.Color = Color.Black;
+            paint.TextAlign = Paint.Align.Left;
+            float baseline = -paint.Ascent(); // ascent() is negative
+            int width = (int)(paint.MeasureText(text) + 0.5f); // round
+            int height = (int)(baseline + paint.Descent() + 0.5f);
+            Bitmap image = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
+            Canvas canvas = new Canvas(image);
+            canvas.DrawText(text, 0, baseline, paint);
+            return image;
         }
+
+
+
+
     }
 
-    internal class PhotoViewHolder : RecyclerView.ViewHolder
+    #endregion
+
+    #region MovieViewHolder
+    internal class MovieViewHolder : RecyclerView.ViewHolder
     {
+        //private View.IOnClickListener onclicklistener;
+
         public ImageView Image { get; private set; }
         public TextView Caption { get; private set; }
+        public RatingBar ratingbar { get; private set; }
+        public Activity _MainActivity;
+        public int MovieID;
+
+
 
         // Get references to the views defined in the CardView layout.
-        public PhotoViewHolder(View itemView, Action<int> listener)
+        public MovieViewHolder(View itemView, Action<int> listener)
             : base(itemView)
         {
             // Locate and cache view references:
             Image = itemView.FindViewById<ImageView>(Resource.Id.imageView);
             Caption = itemView.FindViewById<TextView>(Resource.Id.textView);
-
+            ratingbar = itemView.FindViewById<RatingBar>(Resource.Id.ratingbar);
+            ratingbar.Focusable = false;
+            ratingbar.StepSize = 0.01F;
+            
             // Detect user clicks on the item view and report which item
             // was clicked (by position) to the listener:
-            itemView.Click += (sender, e) => listener(base.Position);
+            //itemView.Click += (sender, e) => listener(base.Position);
+            itemView.Click += ItemView_Click;
+            Image.Click += Image_Click;
+        }
+
+        private void Image_Click(object sender, EventArgs e)
+        {
+            Intent intent = new Intent(_MainActivity, typeof(MovieDetailActivity));
+            intent.PutExtra("MovieID", MovieID);
+            _MainActivity.StartActivity(intent);
+        }
+
+        private void ItemView_Click(object sender, EventArgs e)
+        {
+            
         }
     }
+    #endregion
+
+    #region XamarinRecyclerViewOnScrollListener
+    public class XamarinRecyclerViewOnScrollListener : RecyclerView.OnScrollListener
+    {
+        public delegate void LoadMoreEventHandler(object sender, EventArgs e);
+        public event LoadMoreEventHandler LoadMoreEvent;
+        private LayoutManager LayoutManager;
+        
+        public XamarinRecyclerViewOnScrollListener(LayoutManager layoutManager)
+        {
+            LayoutManager = layoutManager;
+        }
+        public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)
+        {
+            base.OnScrolled(recyclerView, dx, dy);
+            var visibleItemCount = recyclerView.ChildCount;
+            var totalItemCount = recyclerView.GetAdapter().ItemCount;
+           // var pastVisiblesItems = LayoutManager.FindFirstVisibleItemPosition();
+
+            /*if ((visibleItemCount + pastVisiblesItems) >= totalItemCount)
+            {
+                LoadMoreEvent(this, null);
+            }*/
+        }
+    }
+    #endregion
 }
-
-
-

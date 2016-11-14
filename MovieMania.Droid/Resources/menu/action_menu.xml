@@ -3,13 +3,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:myapp="http://schemas.android.com/apk/res-auto">
   
-  <item android:id="@+id/action_refresh"
-		android:icon="@drawable/ic_action_refresh"
-		android:title="Refresh"
-		myapp:showAsAction="always" />
-  <item android:id="@+id/action_attach"
-		android:icon="@drawable/ic_action_attach"
-		android:title="Help"
-		myapp:showAsAction="always"/>
+  <item android:id="@+id/action_search"
+        android:title="@string/search_title"
+        android:icon="@drawable/ic_search_white_48dp"
+        android:orderInCategory="3"
+        myapp:showAsAction="always|collapseActionView"
+        myapp:actionViewClass="android.support.v7.widget.SearchView"/>
+
+  <item android:id="@+id/refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="Refresh"
+        myapp:showAsAction="always"
+        android:orderInCategory="2"/>
+  
+  <item android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_white_48dp"
+        android:title="Help"
+        myapp:showAsAction="always"
+        android:orderInCategory="1"/>
   
 </menu>

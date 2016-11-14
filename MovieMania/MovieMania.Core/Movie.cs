@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MovieMania.Core
 {
-    public class Movie
+   /* public class Movie
     {
         public bool adult { get; set; }
         public string backdrop_path { get; set; }
@@ -89,7 +89,7 @@ namespace MovieMania.Core
         public string name { get; set; }
     }
 
-
+    */
    
 
 }

@@ -1021,32 +1021,32 @@ namespace MovieMania.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f080048
-			public const int abc_background_cache_hint_selector_material_dark = 2131230792;
+			// aapt resource value: 0x7f080050
+			public const int abc_background_cache_hint_selector_material_dark = 2131230800;
 			
-			// aapt resource value: 0x7f080049
-			public const int abc_background_cache_hint_selector_material_light = 2131230793;
+			// aapt resource value: 0x7f080051
+			public const int abc_background_cache_hint_selector_material_light = 2131230801;
 			
-			// aapt resource value: 0x7f08004a
-			public const int abc_color_highlight_material = 2131230794;
+			// aapt resource value: 0x7f080052
+			public const int abc_color_highlight_material = 2131230802;
 			
 			// aapt resource value: 0x7f080004
 			public const int abc_input_method_navigation_guard = 2131230724;
 			
-			// aapt resource value: 0x7f08004b
-			public const int abc_primary_text_disable_only_material_dark = 2131230795;
+			// aapt resource value: 0x7f080053
+			public const int abc_primary_text_disable_only_material_dark = 2131230803;
 			
-			// aapt resource value: 0x7f08004c
-			public const int abc_primary_text_disable_only_material_light = 2131230796;
+			// aapt resource value: 0x7f080054
+			public const int abc_primary_text_disable_only_material_light = 2131230804;
 			
-			// aapt resource value: 0x7f08004d
-			public const int abc_primary_text_material_dark = 2131230797;
+			// aapt resource value: 0x7f080055
+			public const int abc_primary_text_material_dark = 2131230805;
 			
-			// aapt resource value: 0x7f08004e
-			public const int abc_primary_text_material_light = 2131230798;
+			// aapt resource value: 0x7f080056
+			public const int abc_primary_text_material_light = 2131230806;
 			
-			// aapt resource value: 0x7f08004f
-			public const int abc_search_url_text = 2131230799;
+			// aapt resource value: 0x7f080057
+			public const int abc_search_url_text = 2131230807;
 			
 			// aapt resource value: 0x7f080005
 			public const int abc_search_url_text_normal = 2131230725;
@@ -1057,11 +1057,14 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f080007
 			public const int abc_search_url_text_selected = 2131230727;
 			
-			// aapt resource value: 0x7f080050
-			public const int abc_secondary_text_material_dark = 2131230800;
+			// aapt resource value: 0x7f080058
+			public const int abc_secondary_text_material_dark = 2131230808;
 			
-			// aapt resource value: 0x7f080051
-			public const int abc_secondary_text_material_light = 2131230801;
+			// aapt resource value: 0x7f080059
+			public const int abc_secondary_text_material_light = 2131230809;
+			
+			// aapt resource value: 0x7f08004c
+			public const int accent = 2131230796;
 			
 			// aapt resource value: 0x7f080008
 			public const int accent_material_dark = 2131230728;
@@ -1117,6 +1120,9 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f080003
 			public const int cardview_shadow_start_color = 2131230723;
 			
+			// aapt resource value: 0x7f080049
+			public const int darkPrimary = 2131230793;
+			
 			// aapt resource value: 0x7f08003e
 			public const int design_fab_shadow_end_color = 2131230782;
 			
@@ -1159,6 +1165,9 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f080019
 			public const int dim_foreground_material_light = 2131230745;
 			
+			// aapt resource value: 0x7f08004f
+			public const int divider = 2131230799;
+			
 			// aapt resource value: 0x7f08001a
 			public const int foreground_material_dark = 2131230746;
 			
@@ -1176,6 +1185,9 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f08001f
 			public const int hint_foreground_material_light = 2131230751;
+			
+			// aapt resource value: 0x7f08004a
+			public const int lightPrimary = 2131230794;
 			
 			// aapt resource value: 0x7f080020
 			public const int material_blue_grey_800 = 2131230752;
@@ -1213,6 +1225,12 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f08002b
 			public const int material_grey_900 = 2131230763;
 			
+			// aapt resource value: 0x7f080048
+			public const int primary = 2131230792;
+			
+			// aapt resource value: 0x7f08004d
+			public const int primaryText = 2131230797;
+			
 			// aapt resource value: 0x7f08002c
 			public const int primary_dark_material_dark = 2131230764;
 			
@@ -1243,6 +1261,9 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f080035
 			public const int ripple_material_light = 2131230773;
 			
+			// aapt resource value: 0x7f08004e
+			public const int secondaryText = 2131230798;
+			
 			// aapt resource value: 0x7f080036
 			public const int secondary_text_default_material_dark = 2131230774;
 			
@@ -1261,17 +1282,20 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f08003b
 			public const int switch_thumb_disabled_material_light = 2131230779;
 			
-			// aapt resource value: 0x7f080052
-			public const int switch_thumb_material_dark = 2131230802;
+			// aapt resource value: 0x7f08005a
+			public const int switch_thumb_material_dark = 2131230810;
 			
-			// aapt resource value: 0x7f080053
-			public const int switch_thumb_material_light = 2131230803;
+			// aapt resource value: 0x7f08005b
+			public const int switch_thumb_material_light = 2131230811;
 			
 			// aapt resource value: 0x7f08003c
 			public const int switch_thumb_normal_material_dark = 2131230780;
 			
 			// aapt resource value: 0x7f08003d
 			public const int switch_thumb_normal_material_light = 2131230781;
+			
+			// aapt resource value: 0x7f08004b
+			public const int textIcons = 2131230795;
 			
 			static Color()
 			{
@@ -1876,163 +1900,52 @@ namespace MovieMania.Droid
 			public const int abc_textfield_search_material = 2130837578;
 			
 			// aapt resource value: 0x7f02004b
-			public const int arc_de_triomphe = 2130837579;
+			public const int design_fab_background = 2130837579;
 			
 			// aapt resource value: 0x7f02004c
-			public const int before_mobile_phones = 2130837580;
+			public const int design_snackbar_background = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int big_ben_1 = 2130837581;
+			public const int ic_action_refresh = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
-			public const int big_ben_2 = 2130837582;
+			public const int ic_calendar_white_24dp = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int buckingham_guards = 2130837583;
+			public const int ic_home_black_48dp = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int champ_elysees = 2130837584;
+			public const int ic_info_black_48dp = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int design_fab_background = 2130837585;
+			public const int ic_launcher = 2130837585;
 			
 			// aapt resource value: 0x7f020052
-			public const int design_snackbar_background = 2130837586;
+			public const int ic_search_black = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int downtown_edinburgh = 2130837587;
+			public const int ic_search_white_48dp = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int edinburgh_castle_1 = 2130837588;
+			public const int ic_settings_black = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int edinburgh_castle_2 = 2130837589;
+			public const int ic_share_white_48dp = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int edinburgh_from_on_high = 2130837590;
+			public const int icon = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int edinburgh_station = 2130837591;
-			
-			// aapt resource value: 0x7f020058
-			public const int eurostar = 2130837592;
-			
-			// aapt resource value: 0x7f020059
-			public const int heres_lookin_at_ya = 2130837593;
+			public const int imgBg = 2130837591;
 			
 			// aapt resource value: 0x7f02005a
-			public const int ic_action_attach = 2130837594;
+			public const int notification_template_icon_bg = 2130837594;
 			
-			// aapt resource value: 0x7f02005b
-			public const int ic_action_refresh = 2130837595;
+			// aapt resource value: 0x7f020058
+			public const int sample_dashboard_item_background = 2130837592;
 			
-			// aapt resource value: 0x7f02005c
-			public const int ic_action_social_share = 2130837596;
-			
-			// aapt resource value: 0x7f02005d
-			public const int ic_devices_black_24dp = 2130837597;
-			
-			// aapt resource value: 0x7f02005e
-			public const int ic_home_black_24dp = 2130837598;
-			
-			// aapt resource value: 0x7f02005f
-			public const int ic_question_answer_black_24dp = 2130837599;
-			
-			// aapt resource value: 0x7f020060
-			public const int ic_supervisor_account_black_24dp = 2130837600;
-			
-			// aapt resource value: 0x7f020061
-			public const int Icon = 2130837601;
-			
-			// aapt resource value: 0x7f020062
-			public const int imgBg = 2130837602;
-			
-			// aapt resource value: 0x7f020063
-			public const int inside_notre_dame = 2130837603;
-			
-			// aapt resource value: 0x7f020064
-			public const int la_tour_eiffel = 2130837604;
-			
-			// aapt resource value: 0x7f020065
-			public const int london_eye = 2130837605;
-			
-			// aapt resource value: 0x7f020066
-			public const int louvre_1 = 2130837606;
-			
-			// aapt resource value: 0x7f020067
-			public const int louvre_2 = 2130837607;
-			
-			// aapt resource value: 0x7f020068
-			public const int medieval_siege_gun = 2130837608;
-			
-			// aapt resource value: 0x7f020069
-			public const int modest_accomodations = 2130837609;
-			
-			// aapt resource value: 0x7f02006a
-			public const int museum_and_castle = 2130837610;
-			
-			// aapt resource value: 0x7f02007f
-			public const int notification_template_icon_bg = 2130837631;
-			
-			// aapt resource value: 0x7f02006b
-			public const int notre_dame = 2130837611;
-			
-			// aapt resource value: 0x7f02006c
-			public const int old_meets_new = 2130837612;
-			
-			// aapt resource value: 0x7f02006d
-			public const int one_o_clock_gun = 2130837613;
-			
-			// aapt resource value: 0x7f02006e
-			public const int pompidou_centre = 2130837614;
-			
-			// aapt resource value: 0x7f02006f
-			public const int portcullis_gate = 2130837615;
-			
-			// aapt resource value: 0x7f020070
-			public const int royal_mile = 2130837616;
-			
-			// aapt resource value: 0x7f020071
-			public const int rue_cler = 2130837617;
-			
-			// aapt resource value: 0x7f020072
-			public const int sample_dashboard_item_background = 2130837618;
-			
-			// aapt resource value: 0x7f020073
-			public const int scott_monument = 2130837619;
-			
-			// aapt resource value: 0x7f020074
-			public const int seine_barge = 2130837620;
-			
-			// aapt resource value: 0x7f020075
-			public const int seine_river = 2130837621;
-			
-			// aapt resource value: 0x7f020076
-			public const int settings_about = 2130837622;
-			
-			// aapt resource value: 0x7f020077
-			public const int settings_account = 2130837623;
-			
-			// aapt resource value: 0x7f020078
-			public const int to_notre_dame = 2130837624;
-			
-			// aapt resource value: 0x7f020079
-			public const int tower_of_london = 2130837625;
-			
-			// aapt resource value: 0x7f02007a
-			public const int tower_visitors = 2130837626;
-			
-			// aapt resource value: 0x7f02007b
-			public const int versailles_fountains = 2130837627;
-			
-			// aapt resource value: 0x7f02007c
-			public const int versailles_gates = 2130837628;
-			
-			// aapt resource value: 0x7f02007d
-			public const int victoria_albert = 2130837629;
-			
-			// aapt resource value: 0x7f02007e
-			public const int view_from_holyrood_park = 2130837630;
+			// aapt resource value: 0x7f020059
+			public const int search = 2130837593;
 			
 			static Drawable()
 			{
@@ -2047,11 +1960,8 @@ namespace MovieMania.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f060077
-			public const int action0 = 2131099767;
-			
-			// aapt resource value: 0x7f060087
-			public const int action_attach = 2131099783;
+			// aapt resource value: 0x7f060082
+			public const int action0 = 2131099778;
 			
 			// aapt resource value: 0x7f06005a
 			public const int action_bar = 2131099738;
@@ -2077,8 +1987,8 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06005b
 			public const int action_context_bar = 2131099739;
 			
-			// aapt resource value: 0x7f06007b
-			public const int action_divider = 2131099771;
+			// aapt resource value: 0x7f060086
+			public const int action_divider = 2131099782;
 			
 			// aapt resource value: 0x7f060003
 			public const int action_menu_divider = 2131099651;
@@ -2095,8 +2005,11 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06003c
 			public const int action_mode_close_button = 2131099708;
 			
-			// aapt resource value: 0x7f060086
-			public const int action_refresh = 2131099782;
+			// aapt resource value: 0x7f060092
+			public const int action_search = 2131099794;
+			
+			// aapt resource value: 0x7f060094
+			public const int action_share = 2131099796;
 			
 			// aapt resource value: 0x7f06003d
 			public const int activity_chooser_view_content = 2131099709;
@@ -2113,14 +2026,17 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06001b
 			public const int beginning = 2131099675;
 			
+			// aapt resource value: 0x7f060079
+			public const int black_mask = 2131099769;
+			
 			// aapt resource value: 0x7f06002a
 			public const int bottom = 2131099690;
 			
 			// aapt resource value: 0x7f060044
 			public const int buttonPanel = 2131099716;
 			
-			// aapt resource value: 0x7f060078
-			public const int cancel_action = 2131099768;
+			// aapt resource value: 0x7f060083
+			public const int cancel_action = 2131099779;
 			
 			// aapt resource value: 0x7f06002b
 			public const int center = 2131099691;
@@ -2134,8 +2050,8 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f060052
 			public const int checkbox = 2131099730;
 			
-			// aapt resource value: 0x7f06007e
-			public const int chronometer = 2131099774;
+			// aapt resource value: 0x7f060089
+			public const int chronometer = 2131099785;
 			
 			// aapt resource value: 0x7f060033
 			public const int clip_horizontal = 2131099699;
@@ -2146,8 +2062,14 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06001f
 			public const int collapseActionView = 2131099679;
 			
+			// aapt resource value: 0x7f06007d
+			public const int companies = 2131099773;
+			
 			// aapt resource value: 0x7f06004a
 			public const int contentPanel = 2131099722;
+			
+			// aapt resource value: 0x7f060078
+			public const int cover = 2131099768;
 			
 			// aapt resource value: 0x7f060050
 			public const int custom = 2131099728;
@@ -2188,8 +2110,8 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06001c
 			public const int end = 2131099676;
 			
-			// aapt resource value: 0x7f060083
-			public const int end_padder = 2131099779;
+			// aapt resource value: 0x7f06008e
+			public const int end_padder = 2131099790;
 			
 			// aapt resource value: 0x7f060023
 			public const int enterAlways = 2131099683;
@@ -2224,6 +2146,9 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06000f
 			public const int homeAsUp = 2131099663;
 			
+			// aapt resource value: 0x7f06007c
+			public const int homepage = 2131099772;
+			
 			// aapt resource value: 0x7f060042
 			public const int icon = 2131099714;
 			
@@ -2233,11 +2158,11 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06003f
 			public const int image = 2131099711;
 			
-			// aapt resource value: 0x7f060084
-			public const int imageView = 2131099780;
+			// aapt resource value: 0x7f060090
+			public const int imageView = 2131099792;
 			
-			// aapt resource value: 0x7f060082
-			public const int info = 2131099778;
+			// aapt resource value: 0x7f06008d
+			public const int info = 2131099789;
 			
 			// aapt resource value: 0x7f060000
 			public const int item_touch_helper_previous_elevation = 2131099648;
@@ -2248,11 +2173,11 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06002f
 			public const int left = 2131099695;
 			
-			// aapt resource value: 0x7f06007c
-			public const int line1 = 2131099772;
+			// aapt resource value: 0x7f060087
+			public const int line1 = 2131099783;
 			
-			// aapt resource value: 0x7f060080
-			public const int line3 = 2131099776;
+			// aapt resource value: 0x7f06008b
+			public const int line3 = 2131099787;
 			
 			// aapt resource value: 0x7f06000b
 			public const int listMode = 2131099659;
@@ -2260,8 +2185,14 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f060041
 			public const int list_item = 2131099713;
 			
+			// aapt resource value: 0x7f060077
+			public const int listview = 2131099767;
+			
 			// aapt resource value: 0x7f06007a
-			public const int media_actions = 2131099770;
+			public const int main_container = 2131099770;
+			
+			// aapt resource value: 0x7f060085
+			public const int media_actions = 2131099781;
 			
 			// aapt resource value: 0x7f06001d
 			public const int middle = 2131099677;
@@ -2272,14 +2203,14 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f060016
 			public const int multiply = 2131099670;
 			
-			// aapt resource value: 0x7f06008a
-			public const int nav_friends = 2131099786;
+			// aapt resource value: 0x7f060095
+			public const int nav_home = 2131099797;
 			
-			// aapt resource value: 0x7f060088
-			public const int nav_home = 2131099784;
+			// aapt resource value: 0x7f060097
+			public const int nav_info = 2131099799;
 			
-			// aapt resource value: 0x7f060089
-			public const int nav_messages = 2131099785;
+			// aapt resource value: 0x7f060096
+			public const int nav_settings = 2131099798;
 			
 			// aapt resource value: 0x7f060076
 			public const int nav_view = 2131099766;
@@ -2295,6 +2226,12 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f06000c
 			public const int normal = 2131099660;
+			
+			// aapt resource value: 0x7f060081
+			public const int overview = 2131099777;
+			
+			// aapt resource value: 0x7f060080
+			public const int overview_container = 2131099776;
 			
 			// aapt resource value: 0x7f060028
 			public const int parallax = 2131099688;
@@ -2314,8 +2251,14 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f060054
 			public const int radio = 2131099732;
 			
+			// aapt resource value: 0x7f060091
+			public const int ratingbar = 2131099793;
+			
 			// aapt resource value: 0x7f060073
 			public const int recyclerView = 2131099763;
+			
+			// aapt resource value: 0x7f060093
+			public const int refresh = 2131099795;
 			
 			// aapt resource value: 0x7f060030
 			public const int right = 2131099696;
@@ -2410,8 +2353,8 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f060031
 			public const int start = 2131099697;
 			
-			// aapt resource value: 0x7f060079
-			public const int status_bar_latest_event_content = 2131099769;
+			// aapt resource value: 0x7f060084
+			public const int status_bar_latest_event_content = 2131099780;
 			
 			// aapt resource value: 0x7f060065
 			public const int submit_area = 2131099749;
@@ -2419,20 +2362,26 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f06000d
 			public const int tabMode = 2131099661;
 			
-			// aapt resource value: 0x7f060081
-			public const int text = 2131099777;
-			
 			// aapt resource value: 0x7f06007f
-			public const int text2 = 2131099775;
+			public const int tagline = 2131099775;
+			
+			// aapt resource value: 0x7f06007e
+			public const int tagline_container = 2131099774;
+			
+			// aapt resource value: 0x7f06008c
+			public const int text = 2131099788;
+			
+			// aapt resource value: 0x7f06008a
+			public const int text2 = 2131099786;
 			
 			// aapt resource value: 0x7f06004d
 			public const int textSpacerNoButtons = 2131099725;
 			
-			// aapt resource value: 0x7f060085
-			public const int textView = 2131099781;
+			// aapt resource value: 0x7f06008f
+			public const int textView = 2131099791;
 			
-			// aapt resource value: 0x7f06007d
-			public const int time = 2131099773;
+			// aapt resource value: 0x7f060088
+			public const int time = 2131099784;
 			
 			// aapt resource value: 0x7f060043
 			public const int title = 2131099715;
@@ -2463,6 +2412,9 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f060015
 			public const int wrap_content = 2131099669;
+			
+			// aapt resource value: 0x7f06007b
+			public const int year = 2131099771;
 			
 			static Id()
 			{
@@ -2635,46 +2587,49 @@ namespace MovieMania.Droid
 			public const int Main = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public const int notification_media_action = 2130903081;
+			public const int MovieDetaillayout = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public const int notification_media_cancel_action = 2130903082;
+			public const int notification_media_action = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public const int notification_template_big_media = 2130903083;
+			public const int notification_media_cancel_action = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public const int notification_template_big_media_narrow = 2130903084;
+			public const int notification_template_big_media = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public const int notification_template_lines = 2130903085;
+			public const int notification_template_big_media_narrow = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int notification_template_media = 2130903086;
+			public const int notification_template_lines = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int notification_template_part_chronometer = 2130903087;
+			public const int notification_template_media = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int notification_template_part_time = 2130903088;
+			public const int notification_template_part_chronometer = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int PhotoCardView = 2130903089;
+			public const int notification_template_part_time = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int recyclerview = 2130903090;
+			public const int PhotoCardView = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int select_dialog_item_material = 2130903091;
+			public const int recyclerview = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int select_dialog_multichoice_material = 2130903092;
+			public const int select_dialog_item_material = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int select_dialog_singlechoice_material = 2130903093;
+			public const int select_dialog_multichoice_material = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int support_simple_spinner_dropdown_item = 2130903094;
+			public const int select_dialog_singlechoice_material = 2130903094;
+			
+			// aapt resource value: 0x7f030037
+			public const int support_simple_spinner_dropdown_item = 2130903095;
 			
 			static Layout()
 			{
@@ -2788,6 +2743,9 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f09001b
 			public const int open_drawer = 2131296283;
+			
+			// aapt resource value: 0x7f09001d
+			public const int search_title = 2131296285;
 			
 			// aapt resource value: 0x7f090013
 			public const int status_bar_notification_info_overflow = 2131296275;
@@ -3264,6 +3222,12 @@ namespace MovieMania.Droid
 			// aapt resource value: 0x7f070003
 			public const int CardView_Light = 2131165187;
 			
+			// aapt resource value: 0x7f070160
+			public const int DetailField = 2131165536;
+			
+			// aapt resource value: 0x7f07015f
+			public const int HeaderTextView = 2131165535;
+			
 			// aapt resource value: 0x7f07015c
 			public const int MyTheme = 2131165532;
 			
@@ -3299,6 +3263,9 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f07001f
 			public const int Platform_Widget_AppCompat_Spinner = 2131165215;
+			
+			// aapt resource value: 0x7f07015d
+			public const int RatingBar = 2131165533;
 			
 			// aapt resource value: 0x7f07002c
 			public const int RtlOverlay_DialogWindowTitle_AppCompat = 2131165228;
@@ -3854,6 +3821,9 @@ namespace MovieMania.Droid
 			
 			// aapt resource value: 0x7f07015a
 			public const int Widget_Design_TextInputLayout = 2131165530;
+			
+			// aapt resource value: 0x7f07015e
+			public const int dialog = 2131165534;
 			
 			static Style()
 			{

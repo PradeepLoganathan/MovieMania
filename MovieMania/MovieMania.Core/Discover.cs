@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace MovieMania.Core
 {
-    public class Discover:IEnumerable<DiscoverResponse>
+   /* public class Discover:IEnumerable<DiscoverResponse>
     {
         public int page { get; set; }
         public DiscoverResponse[] results { get; set; }
@@ -68,7 +68,7 @@ namespace MovieMania.Core
                         Debug.WriteLine("***********************************************************************************************");
 
                         /*foreach (DiscoverResponse dr in discresp1)
-                            dr.InflateImages();*/
+                            dr.InflateImages();
 
                         return (Discover)dynObj;
                     }
@@ -130,6 +130,6 @@ namespace MovieMania.Core
         {
             await this.GetImageBitmapFromUrlAsync(LoadConfig.ConfigValues["BaseURL"] + this.backdrop_path);
         }
-    }
+    }*/
 
 }
